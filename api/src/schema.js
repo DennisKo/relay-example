@@ -21,7 +21,7 @@ const typeDefs = gql`
   type User {
     id: ID!
     email: String!
-    domains: [Domain]!
+    domains(language: Language): [Domain]!
   }
 
   enum Language {

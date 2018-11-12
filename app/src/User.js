@@ -1,5 +1,7 @@
 import React from "react";
 import Domains from "./Domains";
+import graphql from "babel-plugin-relay/macro";
+import { createFragmentContainer } from "react-relay";
 
 const User = ({ user }) => {
   return (
@@ -11,4 +13,14 @@ const User = ({ user }) => {
   );
 };
 
-export default User;
+export default createFragmentContainer(User, {
+  user: graphql`
+    fragment User_user on User {
+      id
+      email
+      domains(language: $lang) {
+        ...Domains_domains
+      }
+    }
+  `
+});

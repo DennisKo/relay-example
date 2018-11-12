@@ -1,21 +1,26 @@
 import React from "react";
+import graphql from "babel-plugin-relay/macro";
+import { createFragmentContainer } from "react-relay";
+import Domain from "./Domain";
 
 const Domains = ({ domains }) => {
   return (
     <div>
-      <div>
-        Domains:
-        <ul>
-          {domains.map(domain => (
-            <li key={domain.id}>
-              <img width="15px" alt={domain.url} src={domain.icon.data} />
-              {domain.url}
-            </li>
-          ))}
-        </ul>
-      </div>
+      Domains:
+      <ul>
+        {domains.map(domain => (
+          <Domain domain={domain} key={domain.id} />
+        ))}
+      </ul>
     </div>
   );
 };
 
-export default Domains;
+export default createFragmentContainer(Domains, {
+  domains: graphql`
+    fragment Domains_domains on Domain @relay(plural: true) {
+      id
+      ...Domain_domain
+    }
+  `
+});

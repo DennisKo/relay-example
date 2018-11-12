@@ -11,7 +11,7 @@ module.exports = {
       const domains = user.domains.map(domId =>
         data.domains.find(domain => domain.id === domId)
       );
-      await sleep(1500);
+      await sleep(500);
       return { ...user, domains };
     },
     domains: (a, { language }, context) => {
